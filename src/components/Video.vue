@@ -1,12 +1,9 @@
 <template>
-    <iframe
-          
-          v-if="isStarted"
-          width="420"
-          height="315"
-          src="http://pendelcam.kip.uni-heidelberg.de/mjpg/video.mjpg"
+    <Img v-if="isStarted"
+        src="http://pendelcam.kip.uni-heidelberg.de/mjpg/video.mjpg"
         >
-        </iframe>
+        
+        </Img>
 
 </template>
 
