@@ -4,8 +4,11 @@ import vuetify from './plugins/vuetify'
 import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css' 
-
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
 Vue.use(Vuetify)
+
+
 
 Vue.config.productionTip = false
 

@@ -1,5 +1,5 @@
 <template>
-    <Img v-if="isStarted"
+    <Img v-if="isStarted" crossOrigin="anonymous" 
         src="http://pendelcam.kip.uni-heidelberg.de/mjpg/video.mjpg"
         >
         
