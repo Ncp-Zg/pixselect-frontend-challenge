@@ -46,9 +46,7 @@
 </template>
 
 <script>
-// import html2canvas from "html2canvas";
 import Video from "@/components/Video.vue";
-// import axios from "axios";
 
 export default {
   name: "Home",
@@ -61,8 +59,7 @@ export default {
       output: "",
       isClicked: false,
       recordTime: "",
-      beginpathX: 0,
-      beginpathY: 0,
+      imgdata:[]
     };
   },
   methods: {
@@ -74,31 +71,29 @@ export default {
     drawOnImage() {
       const canvasElement = document.getElementById("layer1");
       const context = canvasElement.getContext("2d");
+      let mouseX = 0;
+      let mouseY = 0;
 
-      let isDrawing;
+      // let isDrawing;
 
       canvasElement.onmousedown = (e) => {
-        isDrawing = true;
         context.beginPath();
-        context.lineJoin = "round";
-        context.lineCap = "round";
-        context.moveTo(e.clientX, e.clientY);
-        let a = e.clientX;
-        let b = e.clientY;
+        context.closePath()
+if (e.offsetX) {
+          mouseX= e.offsetX;
+          mouseY=e.offsetY;
+        }else{
+          mouseX = e.pageX -e.target.offsetLeft;
+          mouseY = e.pageY - e.target.offsetTop;
+        }
+        
         canvasElement.onmouseup = function (e) {
-          console.log(a, b, e.clientX, e.clientY);
-          context.strokeRect(a, b, e.clientX - a, e.clientY - b);
-
-          isDrawing = false;
+          context.strokeRect(mouseX, mouseY, e.offsetX-mouseX ,e.offsetY-mouseY);
           context.closePath();
         };
       };
 
-      canvasElement.onmousemove = () => {
-        if (isDrawing) {
-          context.stroke();
-        }
-      };
+      
     },
     async screenShot() {
       this.recordTime = new Date();
@@ -125,17 +120,34 @@ export default {
     save() {
       const canvas = document.getElementById("layer1");
       canvas.crossOrigin = "Anonymous"
-      var link = document.getElementById("check");
+      var dataURL = canvas.toDataURL("image/png").replace(/^data:image\/(png|jpg);base64,/, "");
+
+      const data = {
+        url:dataURL,
+        timestamp:this.recordTime,
+        location:"",
+      }
+
+      this.imgdata.push(data)
+
+      localStorage.setItem("imgData", JSON.stringify(this.imgdata));
+
+      // var link = document.getElementById("check");
       
       
-          link.href = canvas.toDataURL();
-          link.download = "mypainting.png";
+      //     link.href = canvas.toDataURL();
+      //     link.download = "mypainting.png";
         
     },
     reject() {
       this.isClicked = false;
     },
   },
+  created(){
+    let data = JSON.parse(localStorage.getItem("imgData"))
+    console.log(data,this.imgdata)
+    this.imgdata = [...data]
+  }
 };
 </script>
 
@@ -163,7 +175,7 @@ export default {
 }
 
 .popup {
-  position: absolute;
+  
   border-radius: 10px;
   border-color: black;
   top: 0px;
