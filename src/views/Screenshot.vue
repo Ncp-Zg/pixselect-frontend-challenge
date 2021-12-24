@@ -78,13 +78,13 @@ export default {
       this.imgData = data
     }
   },
-  updated() {
-    let data = JSON.parse(localStorage.getItem("imgData"))
-    console.log(data)
-    if(data){
-      this.imgData = data
-    }
-  }
+  // updated() {
+  //   let data = JSON.parse(localStorage.getItem("imgData"))
+  //   console.log(data)
+  //   if(data){
+  //     this.imgData = data
+  //   }
+  // }
 }
 
 </script>

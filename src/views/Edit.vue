@@ -63,13 +63,10 @@ export default {
   },
   methods: {
     edit() {
-      console.log(this.loc);
-      let updatedData = JSON.parse(localStorage.getItem("imgData")).splice(
-        this.$route.params.id,
-        1
-      );
-      console.log(updatedData);
-      updatedData.push({
+
+        
+      let updatedData = JSON.parse(localStorage.getItem("imgData"))
+      updatedData.splice(this.$route.params.id,1, {
         url: this.ImgData.url,
         timestamp: this.time,
         location: this.loc,
@@ -81,6 +78,8 @@ export default {
         }
         
       });
+      console.log(updatedData)
+    //   console.log(newData)
       localStorage.setItem("imgData",JSON.stringify(updatedData));
     },
   },
