@@ -57,34 +57,36 @@ export default {
     }
     
   },
+  
+  created() {
+    let data = JSON.parse(localStorage.getItem("imgData"))
+    console.log("created render")
+    if(data){
+      this.imgData = data
+    }
+    console.log(this.imgData)
+  },
+
+  updated() {
+     JSON.parse(localStorage.getItem("imgData"))
+    console.log("updated render")
+    
+  },
   methods:{
     del(e){
-      // console.log(this.imgData)
-      let imgdata = JSON.parse(localStorage.getItem("imgData"))
-      imgdata.splice(e,1);
-      localStorage.setItem("imgData",imgdata)
-      this.imgData=imgdata
-      
+      let data = JSON.parse(localStorage.getItem("imgData"))
+      console.log(data)
+      let updated = data.splice(e,1);
+      console.log(updated)
+      console.log(data)
+    this.imgData = data
+    localStorage.setItem("imgData",JSON.stringify(updated))
     },
     edit(data,index){
       console.log(data)
       this.$router.push({name: 'Edit', params : { id: index}});
     }
   },
-  created() {
-    let data = JSON.parse(localStorage.getItem("imgData"))
-    console.log(data)
-    if(data){
-      this.imgData = data
-    }
-  },
-  // updated() {
-  //   let data = JSON.parse(localStorage.getItem("imgData"))
-  //   console.log(data)
-  //   if(data){
-  //     this.imgData = data
-  //   }
-  // }
 }
 
 </script>
