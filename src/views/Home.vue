@@ -145,8 +145,13 @@ if (e.offsetX) {
   },
   created(){
     let data = JSON.parse(localStorage.getItem("imgData"))
-    console.log(data,this.imgdata)
-    this.imgdata = [...data]
+    console.log(data)
+    if(data){
+      this.imgdata = data
+    }else{
+      this.imgdata=[]
+    }
+    
   }
 };
 </script>
