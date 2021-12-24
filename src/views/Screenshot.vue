@@ -1,7 +1,8 @@
 <template>
-<div >
-<v-card v-for="data in imgData" :key="data.timestamp"
-    class="mx-auto"
+<v-app>
+<div class="maincard">
+<v-card v-for="(data,index) in imgData" :key="data.timestamp"
+    class="mx-auto card"
     max-width="400"
   >
     <v-img
@@ -17,28 +18,31 @@
     </v-card-subtitle>
 
     <v-card-text class="text--primary">
-      <div>Whitehaven Beach</div>
+      <div>{{data.location}}</div>
 
-      <div>Whitsunday Island, Whitsunday Islands</div>
+      <div>Coordinates : ({{data.coordinates.x1}},{{data.coordinates.y1}}) - ({{data.coordinates.x1}},{{data.coordinates.y2}}) - ({{data.coordinates.x2}},{{data.coordinates.y1}}) - ({{data.coordinates.x2}},{{data.coordinates.y2}})</div>
     </v-card-text>
 
-    <v-card-actions>
+    <v-card-actions class="d-flex justify-center">
       <v-btn
-        color="orange"
-        text
+        color="success"
+        @click="edit(data,index)"
+        
       >
-        Share
+        EDIT
       </v-btn>
 
       <v-btn
-        color="orange"
-        text
+      color="error"
+      @click="del(index)"
+        
       >
-        Explore
+        DELETE
       </v-btn>
     </v-card-actions>
   </v-card>
 </div>
+</v-app>
   
 </template>
 
@@ -49,31 +53,55 @@ export default {
   props:{},
   data(){
     return{
-     imgData:JSON.parse(localStorage.getItem("imgData")) 
+     imgData:[] 
     }
     
   },
   methods:{
-
+    del(e){
+      // console.log(this.imgData)
+      let imgdata = JSON.parse(localStorage.getItem("imgData"))
+      imgdata.splice(e,1);
+      localStorage.setItem("imgData",imgdata)
+      this.imgData=imgdata
+      
+    },
+    edit(data,index){
+      console.log(data)
+      this.$router.push({name: 'Edit', params : { id: index}});
+    }
   },
   created() {
     let data = JSON.parse(localStorage.getItem("imgData"))
     console.log(data)
     if(data){
-      this.imgdata = data
-    }else{
-      this.imgdata="Gösterilecek bir bilgi bulunmamaktadır"
+      this.imgData = data
     }
   },
   updated() {
     let data = JSON.parse(localStorage.getItem("imgData"))
     console.log(data)
     if(data){
-      this.imgdata = data
-    }else{
-      this.imgdata="Gösterilecek bir bilgi bulunmamaktadır"
+      this.imgData = data
     }
   }
 }
 
 </script>
+
+<style>
+
+.maincard{
+  display:flex;
+  flex-wrap:wrap;
+
+}
+
+.card{
+  margin-top:10px;
+  margin-left:10px;
+}
+
+
+
+</style>
