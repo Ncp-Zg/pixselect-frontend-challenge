@@ -41,6 +41,7 @@
           <v-icon color="white">mdi-camera</v-icon>
         </v-btn>
       </div>
+      <Img id = "main" class="none"/>
     </v-app>
   </div>
 </template>
@@ -61,6 +62,7 @@ export default {
       recordTime: "",
       imgdata: [],
       coordinates: {},
+      mainImg:"",
     };
   },
   methods: {
@@ -69,15 +71,19 @@ export default {
       this.isClicked = false;
       console.log(this.isStarted);
     },
-    drawOnImage() {
+    drawOnImage(w,h) {
       const canvasElement = document.getElementById("layer1");
+      const main = document.getElementById("main");
       const context = canvasElement.getContext("2d");
       let mouseX = 0;
       let mouseY = 0;
 
       // let isDrawing;
-
+      let dataImage = localStorage.getItem("mainImg")
+      main.src="data:image/png;base64," + dataImage
       canvasElement.onmousedown = (e) => {
+        context.fillRect(0, 0, w, h);
+      context.drawImage(main, 0, 0, w, h);
         console.log(e)
         context.beginPath();
         context.closePath();
@@ -125,7 +131,14 @@ export default {
 
       context.fillRect(0, 0, w, h);
       context.drawImage(img, 0, 0, w, h);
-      this.drawOnImage();
+
+       var dataURL = canvas
+        .toDataURL("image/png")
+        .replace(/^data:image\/(png|jpg);base64,/, "");
+
+        localStorage.setItem("mainImg", dataURL);
+
+      this.drawOnImage(w,h);
     },
 
     save() {
@@ -148,6 +161,7 @@ export default {
         this.isClicked = false;
         localStorage.setItem("imgData", JSON.stringify(this.imgdata));
       }
+      localStorage.removeItem("mainImg")
 
       // var link = document.getElementById("check");
 

@@ -73,14 +73,14 @@ export default {
     
   },
   methods:{
-    del(e){
+    async del(e){
       let data = JSON.parse(localStorage.getItem("imgData"))
       console.log(data)
-      let updated = data.splice(e,1);
+      let updated = await data.splice(e,1);
       console.log(updated)
       console.log(data)
     this.imgData = data
-    localStorage.setItem("imgData",JSON.stringify(updated))
+    localStorage.setItem("imgData",JSON.stringify(data))
     },
     edit(data,index){
       console.log(data)
