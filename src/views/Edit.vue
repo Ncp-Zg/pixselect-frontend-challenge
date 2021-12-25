@@ -13,12 +13,12 @@
               <v-img
                 class="white--text align-end"
                 height="200px"
-                src="../../public/indir (8).png"
+                :src= "`data:image/png;base64,${ImgData.url}`"
               >
                 <v-card-title></v-card-title>
               </v-img>
 
-              <v-form ref="form" lazy-validation>
+              
                 <v-text-field
                   v-model="loc"
                   label="Location"
@@ -63,10 +63,11 @@
                   EDIT
                 </v-btn>
 
-                <v-btn color="error" class="mr-4" @click="del()">
-                  DELETE
+                <v-btn color="error" class="mr-4" @click="reset()">
+                  RESET FORM
                 </v-btn>
-              </v-form>
+         
+             
             </v-card>
           </v-col>
           <v-col cols="12" md="4" class="d-flex justify-center align-center">
@@ -77,6 +78,7 @@
         </v-row>
       </div>
     </v-app>
+    
   </div>
 </template>
 
@@ -115,13 +117,21 @@ export default {
       localStorage.setItem("imgData", JSON.stringify(updatedData));
       this.$router.push({ name: "Screenshot" });
     },
+    reset(){
+        this.loc = "";
+    this.x1 = "";
+    this.x2 = "";
+    this.y1 = "";
+    this.y2 = "";
+    this.time = "";
+    },
     goToLeft() {
       if (parseInt(this.$route.params.id) !== 0) {
         this.$router.push({
           name: "Edit",
           params: { id: +this.$route.params.id - 1 },
         });
-        location.reload();
+        
       }
     },
     goToRight() {
@@ -130,7 +140,7 @@ export default {
         name: "Edit",
         params: { id: +this.$route.params.id + 1 },
       });
-      location.reload();
+      
       }
       
     },
@@ -149,11 +159,7 @@ export default {
     this.length = (JSON.parse(localStorage.getItem("imgData"))).length
     console.log("created",(JSON.parse(localStorage.getItem("imgData"))).length)
   },
-  updated() {
-    this.ImgData = JSON.parse(localStorage.getItem("imgData"))[
-      this.$route.params.id
-    ];
-  },
+
   
 };
 </script>

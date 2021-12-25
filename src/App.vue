@@ -4,7 +4,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/screenshot">Screenshots</router-link>
     </div>
-    <router-view/>
+    <router-view  :key="$route.path"/>
   </div>
 </template>
 

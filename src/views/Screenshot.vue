@@ -39,6 +39,11 @@
       >
         DELETE
       </v-btn>
+      <v-btn color="orange" @click="show(index)">
+      <a id="show" >SHOW & DOWNLOAD</a>
+      </v-btn>
+
+          
     </v-card-actions>
   </v-card>
 </div>
@@ -85,7 +90,19 @@ export default {
     edit(data,index){
       console.log(data)
       this.$router.push({name: 'Edit', params : { id: index}});
-    }
+    },
+    debugBase64(base64URL){
+    var win = window.open();
+    
+    win.document.write('<div style="display:flex;flex-direction:column;width:100%;height:100%" allowfullscreen><iframe src="' + base64URL  + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:80%; height:80%;"></iframe><button style="width:100px;height:50px"><a href="'+base64URL+'" download="screenshot.png">DOWNLOAD</a></button></div>')
+},
+    show(i){
+      console.log(i)
+          let dataurl=this.imgData[i].url
+          console.log(this.imgData[i])
+          this.debugBase64(`data:image/png;base64,${dataurl}`)
+
+    },
   },
 }
 

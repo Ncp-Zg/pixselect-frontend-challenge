@@ -25,8 +25,10 @@
           <v-btn fab color="red" small @click="reject()">
             <v-icon color="white">mdi-close</v-icon>
           </v-btn>
+          <v-btn class="ml-2" fab color="red" small  id="check" @click="save()">
+            <v-icon color="white">mdi-check</v-icon>
+          </v-btn>
 
-          <a id="check" @click="save()">indir</a>
         </div>
 
         <v-btn
@@ -63,6 +65,7 @@ export default {
       imgdata: [],
       coordinates: {},
       mainImg:"",
+      
     };
   },
   methods: {
@@ -148,12 +151,13 @@ export default {
         .toDataURL("image/png")
         .replace(/^data:image\/(png|jpg);base64,/, "");
 
-      let location = prompt("Please enter location name", "Turkey");
-      if (location != null) {
+      
+this.$prompt("Please enter a location","Location..","","info").then((text) => {
+  if (text != null) {
         const data = {
           url: dataURL,
           timestamp: this.recordTime,
-          location: location,
+          location: text,
           coordinates: this.coordinates,
         };
 
@@ -162,6 +166,12 @@ export default {
         localStorage.setItem("imgData", JSON.stringify(this.imgdata));
       }
       localStorage.removeItem("mainImg")
+      this.$alert("You can list your screenshots in screenshot page","Success","success");
+})
+
+
+
+      
 
       // var link = document.getElementById("check");
 
@@ -208,10 +218,18 @@ export default {
 }
 
 .popup {
+  margin-top:5px;
   border-radius: 10px;
   border-color: black;
   top: 0px;
   left: 0px;
+}
+
+.popup:hover {
+  cursor:se-resize
+
+;
+  
 }
 
 .none {

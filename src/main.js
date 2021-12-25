@@ -5,8 +5,10 @@ import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css' 
 import VueRouter from 'vue-router'
+import VueSimpleAlert from "vue-simple-alert";
 Vue.use(VueRouter)
 Vue.use(Vuetify)
+Vue.use(VueSimpleAlert);
 
 
 
