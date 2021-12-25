@@ -72,7 +72,6 @@ export default {
     startLiveCamera() {
       this.isStarted = !this.isStarted;
       this.isClicked = false;
-      console.log(this.isStarted);
     },
     drawOnImage(w,h) {
       const canvasElement = document.getElementById("layer1");
@@ -87,7 +86,6 @@ export default {
       canvasElement.onmousedown = (e) => {
         context.fillRect(0, 0, w, h);
       context.drawImage(main, 0, 0, w, h);
-        console.log(e)
         context.beginPath();
         context.closePath();
         if (e.offsetX) {
@@ -102,7 +100,6 @@ export default {
         let y = e.layerY
 
         canvasElement.onmouseup = (e) => {
-          console.log(e)
           this.coordinates.x1 = x;
           this.coordinates.x2 = e.layerX;
           this.coordinates.y1 = y;
@@ -125,7 +122,6 @@ export default {
       var canvas = document.getElementById("layer1");
       var context = canvas.getContext("2d");
       var w, h, ratio;
-      console.log(img.width);
       ratio = img.width / img.height;
       w = img.width - 100;
       h = parseInt(w / ratio, 10);
@@ -152,7 +148,7 @@ export default {
         .replace(/^data:image\/(png|jpg);base64,/, "");
 
       
-this.$prompt("Please enter a location","Location..","","info").then((text) => {
+this.$prompt("Please enter a location","Location..",`${this.recordTime}`,"info").then((text) => {
   if (text != null) {
         const data = {
           url: dataURL,
@@ -166,12 +162,8 @@ this.$prompt("Please enter a location","Location..","","info").then((text) => {
         localStorage.setItem("imgData", JSON.stringify(this.imgdata));
       }
       localStorage.removeItem("mainImg")
-      this.$alert("You can list your screenshots in screenshot page","Success","success");
+      this.$alert("Screenshot is saved successfully.","Success","success");
 })
-
-
-
-      
 
       // var link = document.getElementById("check");
 
@@ -184,7 +176,6 @@ this.$prompt("Please enter a location","Location..","","info").then((text) => {
   },
   created() {
     let data = JSON.parse(localStorage.getItem("imgData"));
-    console.log(data);
     if (data) {
       this.imgdata = data;
     } else {
